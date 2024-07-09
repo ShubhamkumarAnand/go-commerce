@@ -14,8 +14,8 @@ func NewHandler() *Handler {
 }
 
 func (h *Handler) RegisterRoutes(router *mux.Router) {
-	router.HandleFunc("/login",h.handleLogin).Methods("POST")
-	router.HandleFunc("/register",h.handleRegister).Methods("POST")
+	router.HandleFunc("/login", h.handleLogin).Methods("POST")
+	router.HandleFunc("/register", h.handleRegister).Methods("POST")
 }
 
 func (h *Handler) handleLogin(w http.ResponseWriter, r *http.Request) {
@@ -23,5 +23,10 @@ func (h *Handler) handleLogin(w http.ResponseWriter, r *http.Request) {
 }
 
 func (h *Handler) handleRegister(w http.ResponseWriter, r *http.Request) {
-
- }
+	/*
+		Todo: Implement the register user
+		1. get JSON payload
+		2. Check the user already exists
+		3. if it fails create a new user
+	*/
+}

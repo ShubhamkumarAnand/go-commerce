@@ -5,17 +5,17 @@ import (
 	"log"
 
 	"github.com/ShubhamkumarAnand/go-commerce/cmd/api"
-	configs "github.com/ShubhamkumarAnand/go-commerce/config"
+	"github.com/ShubhamkumarAnand/go-commerce/config"
 	"github.com/ShubhamkumarAnand/go-commerce/db"
 	"github.com/go-sql-driver/mysql"
 )
 
 func main() {
 	db, err := db.NewMySQLStorage(mysql.Config{
-		User:                 configs.Envs.DBUser,
-		Passwd:               configs.Envs.DBPassword,
-		Addr:                 configs.Envs.DBAddress,
-		DBName:               configs.Envs.DBName,
+		User:                 config.Envs.DBUser,
+		Passwd:               config.Envs.DBPassword,
+		Addr:                 config.Envs.DBAddress,
+		DBName:               config.Envs.DBName,
 		Net:                  "tcp",
 		AllowNativePasswords: true,
 		ParseTime:            true,
