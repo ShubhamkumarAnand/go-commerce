@@ -7,6 +7,7 @@ import (
 	"github.com/ShubhamkumarAnand/go-commerce/service/auth"
 	"github.com/ShubhamkumarAnand/go-commerce/types"
 	"github.com/ShubhamkumarAnand/go-commerce/utils"
+	"github.com/go-playground/validator/v10"
 	"github.com/gorilla/mux"
 )
 
@@ -28,17 +29,20 @@ func (h *Handler) handleLogin(w http.ResponseWriter, r *http.Request) {
 }
 
 func (h *Handler) handleRegister(w http.ResponseWriter, r *http.Request) {
-	/*
-		Todo: Implement the register user
-		1. get JSON payload
-		2. Check the user already exists
-		3. if it fails create a new user
-	*/
+
 	// get JSON payload
 	var payload types.RegisterUserPayload
-	if err := utils.ParseJson(r, payload); err != nil {
+	if err := utils.ParseJson(r, &payload); err != nil {
 		utils.WriteError(w, http.StatusBadRequest, err)
 	}
+
+	// validate the payload
+	if err := utils.Validate.Struct(payload); err != nil {
+		errors := err.(validator.ValidationErrors)
+		utils.WriteError(w, http.StatusBadRequest, fmt.Errorf("invalid payload %v", errors))
+		return
+	}
+
 	// Check the user already exists
 	_, err := h.store.GetUserByEmail(payload.Email)
 	if err == nil {
